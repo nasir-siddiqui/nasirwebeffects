@@ -1,0 +1,124 @@
+<div id="wp-wind-container" class="wind-container">
+  <!-- The leaves will be generated here by JavaScript -->
+  <div class="wind-content-overlay">
+    <!-- Optional: You can put text here if you want content OVER the leaves -->
+    <h2 style="color: #2c3e50; margin: 0;">Windy Atmosphere</h2>
+    <p style="color: #555;">Watch the leaves blow across the screen.</p>
+  </div>
+</div>
+
+<style>
+  /* 1. Container Styles */
+  .wind-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* ADJUST HEIGHT HERE */
+    background: linear-gradient(to bottom, #f0f9ff 0%, #e6f0fa 100%); /* Optional sky background */
+    overflow: hidden;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .wind-content-overlay {
+    position: relative;
+    z-index: 10; /* Keeps text above leaves */
+    padding: 20px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(2px);
+    border-radius: 10px;
+  }
+
+  /* 2. The Leaf Styling */
+  .leaf {
+    position: absolute;
+    top: -50px; /* Start above/outside view */
+    pointer-events: none; /* Let clicks pass through */
+    z-index: 1;
+    opacity: 0;
+  }
+
+  /* 3. Animations */
+  
+  /* Moves from left to right + sway */
+  @keyframes windFloat {
+    0% {
+      transform: translate(-100px, 0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(120vw, 100px) rotate(720deg); /* Moves across viewport width */
+      opacity: 0;
+    }
+  }
+
+  /* A secondary tumbling animation added via JS inline styles usually, 
+     but here we combine motion in one keyframe for simplicity */
+
+</style>
+
+<script>
+  (function() {
+    const container = document.getElementById('wp-wind-container');
+    
+    // Configuration
+    const leafCount = 35; // Max leaves on screen at once
+    const colors = [
+      '#4CAF50', // Green
+      '#8BC34A', // Light Green
+      '#2E7D32', // Dark Green
+      '#CDDC39', // Lime
+      '#FF9800', // Autumn Orange (optional pop of color)
+      '#795548'  // Brown
+    ];
+
+    // SVG Leaf Shape (Simple Path)
+    const leafSVG = `
+      <svg viewBox="0 0 24 24" width="100%" height="100%" style="fill: currentColor;">
+        <path d="M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A4.49,4.49,0,0,0,8,20C19,20,22,3,22,3,21,5,14,5.25,9,6.25S2,11.5,2,13.5a6.22,6.22,0,0,0,1.75,3.75C7,8,17,8,17,8Z"/>
+      </svg>
+    `;
+
+    function createLeaf() {
+      const leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      leaf.innerHTML = leafSVG;
+      
+      // 1. Randomize Size
+      const size = Math.random() * 20 + 15; // Between 15px and 35px
+      leaf.style.width = `${size}px`;
+      leaf.style.height = `${size}px`;
+      
+      // 2. Randomize Color
+      leaf.style.color = colors[Math.floor(Math.random() * colors.length)];
+      
+      // 3. Randomize Position
+      // We start slightly off-screen Left. 
+      // Top position is random 0-100% of container height.
+      leaf.style.left = '-50px';
+      leaf.style.top = Math.random() * 100 + '%';
+
+      // 4. Randomize Animation Duration (Speed)
+      const duration = Math.random() * 5 + 5; // Between 5s and 10s
+      leaf.style.animation = `windFloat ${duration}s linear infinite`;
+      
+      // 5. Add Animation Delay so they don't all start at once
+      leaf.style.animationDelay = Math.random() * 5 + 's';
+
+      container.appendChild(leaf);
+    }
+
+    // Initialize Leaves
+    for (let i = 0; i < leafCount; i++) {
+      createLeaf();
+    }
+  })();
+</script>
