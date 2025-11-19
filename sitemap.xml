@@ -3,30 +3,86 @@
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.00</priority>
   </url>
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/wind-leafs.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/social-icon.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/social-icon-border.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/smoke.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://nasirwebeffects.vercel.app/one8-smoke.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/modern.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/gta6.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/flow.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/digital.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/chess.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://nasirwebeffects.vercel.app/18-dashboard.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+</urlset>
