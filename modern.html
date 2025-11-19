@@ -1,0 +1,213 @@
+<!-- 
+  Futuristic Interactive Background
+  - Tech-inspired particle network
+  - Reacts to mouse proximity
+  - Fades in/out on body hover
+-->
+
+<canvas id="tech-canvas"></canvas>
+
+<div class="hero-content">
+  <h1 class="glitch-text">SYSTEM ONLINE</h1>
+  <p>Hover to initialize neural interface.</p>
+</div>
+
+<style>
+  body {
+    margin: 0;
+    background-color: #020202; /* Deepest black for contrast */
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace; /* Monospace for tech feel */
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-content {
+    pointer-events: none; /* Let clicks pass through to canvas interactions if needed */
+    text-align: center;
+    z-index: 10;
+    mix-blend-mode: difference; /* Cool blend effect over particles */
+  }
+
+  h1 {
+    font-size: 3rem;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  }
+
+  p {
+    font-size: 1rem;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  #tech-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0; /* Start invisible */
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth ease-out */
+  }
+
+  /* Active state toggled by JS */
+  #tech-canvas.active {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('tech-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+    let isHovering = false;
+
+    // Configuration
+    const config = {
+      particleColor: '0, 243, 255', // Cyan (RGB)
+      lineColor: '0, 243, 255',     // Cyan lines
+      particleCount: window.innerWidth < 768 ? 60 : 130, // Reduced on mobile
+      connectionDist: 120,          // Distance to draw lines
+      mouseDist: 150,               // Radius of mouse influence
+      baseSpeed: 0.5,               // Idle drift speed
+    };
+
+    // Mouse State
+    const mouse = { x: null, y: null };
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * config.baseSpeed;
+        this.vy = (Math.random() - 0.5) * config.baseSpeed;
+        this.size = Math.random() * 2 + 1;
+      }
+
+      update() {
+        // 1. Basic Movement
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // 2. Mouse Interaction (Repulsion)
+        if (isHovering && mouse.x != null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < config.mouseDist) {
+            // Calculate force direction
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            
+            // Stronger force the closer you are
+            const force = (config.mouseDist - distance) / config.mouseDist;
+            
+            // Push away gently
+            const directionX = forceDirectionX * force * 3;
+            const directionY = forceDirectionY * force * 3;
+
+            this.x -= directionX;
+            this.y -= directionY;
+          }
+        }
+
+        // 3. Screen Wrapping
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${config.particleColor}, 1)`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = window.innerWidth < 768 ? 60 : 130;
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Update and Draw Particles
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        // 2. Draw Connections (The "Network" Effect)
+        // We nest loops to compare every particle to every other particle
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx*dx + dy*dy);
+
+          if (distance < config.connectionDist) {
+            ctx.beginPath();
+            // Opacity is determined by distance (closer = brighter)
+            const opacity = 1 - (distance / config.connectionDist);
+            ctx.strokeStyle = `rgba(${config.lineColor}, ${opacity * 0.4})`; // 0.4 max opacity
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // Event Listeners for Interactions
+    document.body.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Ensure active state if moving (catches edge cases)
+      if(!isHovering) {
+        isHovering = true;
+        canvas.classList.add('active');
+      }
+    });
+
+    document.body.addEventListener('mouseenter', () => {
+      isHovering = true;
+      canvas.classList.add('active');
+    });
+
+    document.body.addEventListener('mouseleave', () => {
+      isHovering = false;
+      mouse.x = null;
+      mouse.y = null;
+      canvas.classList.remove('active');
+    });
+
+    // Init
+    resize();
+    animate();
+
+  })();
+</script>
