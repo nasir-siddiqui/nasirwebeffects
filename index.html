@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Kadir Siddiqui - Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        /* Custom styles for the purple theme and motion graphics */
+        :root {
+            --primary-color: #4f46e5; /* Tailwind indigo-600 */
+            --accent-color: #8b5cf6;  /* Tailwind violet-500 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8ff; /* Light, clean background */
+            color: #1f2937; /* Dark gray text */
+            scroll-behavior: smooth;
+        }
+        .text-gradient {
+            background-image: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Motion Graphics Styling (Subtle Floating Blobs) --- */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* Ensures content is above the background */
+            opacity: 0.6;
+        }
+        .blob {
+            position: absolute;
+            background: rgba(109, 40, 217, 0.15); /* Semi-transparent deep purple */
+            border-radius: 50%;
+            /* Keep CSS animation running constantly */
+            animation: moveBlob 25s infinite alternate ease-in-out;
+            filter: blur(100px); /* Soft glow effect */
+            transition: opacity 1s;
+        }
+
+        /* Define individual blob sizes, positions, and animation delays */
+        .blob-1 { width: 300px; height: 300px; top: 10%; left: 5%; animation-delay: 0s; }
+        .blob-2 { width: 200px; height: 200px; top: 50%; right: 10%; animation-delay: 5s; background: rgba(124, 58, 237, 0.2); }
+        .blob-3 { width: 400px; height: 400px; bottom: 0%; left: 30%; animation-delay: 10s; background: rgba(139, 92, 246, 0.1); }
+        .blob-4 { width: 150px; height: 150px; bottom: 20%; right: 40%; animation-delay: 15s; }
+
+        @keyframes moveBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30vw, -10vh) scale(1.1); }
+            66% { transform: translate(-10vw, 20vh) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Ensure content stays on top */
+        .content-container {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-20 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Brand Name -->
+            <a href="#intro" class="text-2xl font-extrabold text-gradient tracking-tight">
+                Digital Kadir Siddiqui
+            </a>
+            <!-- Navigation Links (Hidden on mobile, shown on desktop) -->
+            <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
+                <a href="#about" class="hover:text-indigo-600 transition duration-300">About</a>
+                <a href="#services" class="hover:text-indigo-600 transition duration-300">Services</a>
+                <a href="#strategy-lab" class="hover:text-indigo-600 transition duration-300">Strategy Lab</a>
+                <a href="#ad-copy-reviewer" class="hover:text-indigo-600 transition duration-300">Ad Review</a>
+                <a href="#seo-pillar-generator" class="hover:text-indigo-600 transition duration-300">SEO Pillars</a>
+                <a href="#contact" class="hover:text-indigo-600 transition duration-300">Contact</a>
+                <a href="#cta" class="px-3 py-1 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition duration-300">Start Project</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-container">
+
+        <!-- 1. Intro Section (Hero with Motion Graphics) -->
+        <section id="intro" class="relative overflow-hidden min-h-[80vh] flex items-center justify-center text-center bg-gray-50 rounded-b-3xl shadow-xl p-8">
+            
+            <!-- Motion Graphics Background -->
+            <div class="animated-bg">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
+                <div class="blob blob-4"></div>
+            </div>
+
+            <!-- Hero Content -->
+            <div class="relative z-10 max-w-4xl px-4 py-20">
+                <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600 mb-4">
+                    Data-Driven Digital Marketing Expert
+                </p>
+                <h1 class="text-6xl sm:text-7xl font-extrabold leading-tight mb-6">
+                    Grow Your Brand with <span class="text-gradient">Strategic Digital Solutions</span>
+                </h1>
+                <p class="text-xl text-gray-700 mb-10 max-w-2xl mx-auto">
+                    I help businesses achieve measurable success online through performance marketing, SEO, and compelling content strategies.
+                </p>
+                <!-- Primary CTA Button -->
+                <a href="#cta" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-violet-600 hover:bg-violet-700 transform transition duration-300 hover:scale-[1.03]">
+                    <i data-lucide="zap" class="w-5 h-5 mr-2"></i>
+                    Book a Free Strategy Call
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. About Section -->
+        <section id="about" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">About <span class="text-indigo-600">Kadir Siddiqui</span></h2>
+                <div class="h-1 bg-indigo-500 w-16 mx-auto rounded-full mb-12"></div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 text-lg text-gray-700">
+                        <p>
+                            With over **7 years of experience** in the digital marketing landscape, I've had the privilege of partnering with startups and established enterprises alike, delivering exceptional growth through tailored online strategies. My philosophy centers around two things: **data integrity** and **user experience**.
+                        </p>
+                        <p>
+                            I specialize in translating complex business goals into clear, executable digital roadmaps. Whether it's optimizing search rankings, scaling PPC campaigns, or crafting engaging social media narratives, my approach ensures every dollar spent contributes directly to your bottom line. I thrive on continuous learning and adapting to the ever-evolving digital algorithms.
+                        </p>
+                        <a href="#contact" class="inline-flex mt-4 text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300 group">
+                            Let's Connect and Discuss Your Goals
+                            <i data-lucide="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-1 transition duration-300"></i>
+                        </a>
+                    </div>
+                    <!-- Mock Image/Visual -->
+                    <div class="rounded-xl overflow-hidden shadow-2xl bg-indigo-50 p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="line-chart" class="w-8 h-8 text-indigo-600"></i>
+                                <p class="text-xl font-semibold text-gray-900">120% Average Revenue Growth</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="search" class="w-8 h-8 text-indigo-600"></i>
+                                <p class="text-xl font-semibold text-gray-900">55+ Successful SEO Audits</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="message-square" class="w-8 h-8 text-indigo-600"></i>
+                                <p class="text-xl font-semibold text-gray-900">Proven Content Strategy Frameworks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Services Section -->
+        <section id="services" class="py-20 bg-gray-100 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">My Core <span class="text-indigo-600">Services</span></h2>
+                <p class="text-center text-xl text-gray-600 mb-12">Integrated strategies for maximum digital impact.</p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-indigo-500 hover:shadow-2xl transition duration-300">
+                        <i data-lucide="bar-chart-2" class="w-10 h-10 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Performance Marketing (PPC)</h3>
+                        <p class="text-gray-600">Expert management of Google Ads, Facebook/Instagram Ads, and LinkedIn campaigns to drive immediate, profitable conversions and scale your customer acquisition.</p>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-indigo-500 hover:shadow-2xl transition duration-300">
+                        <i data-lucide="trending-up" class="w-10 h-10 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Search Engine Optimization (SEO)</h3>
+                        <p class="text-gray-600">Comprehensive on-page, off-page, and technical SEO audits and implementation to secure top rankings and high-quality organic traffic for long-term growth.</p>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-indigo-500 hover:shadow-2xl transition duration-300">
+                        <i data-lucide="feather" class="w-10 h-10 text-indigo-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Content Strategy & Creation</h3>
+                        <p class="text-gray-600">Developing and executing content plans that resonate with your target audience, establishing thought leadership, and nurturing leads through the sales funnel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Digital Strategy Lab powered by Gemini -->
+        <section id="strategy-lab" class="py-20 bg-violet-50 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800">
+                    Digital Strategy Lab ✨
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    See our strategic thinking in action. Enter a business type and get a tailored marketing idea powered by the Gemini AI.
+                </p>
+
+                <div class="bg-white p-6 rounded-xl shadow-2xl space-y-4">
+                    <input type="text" id="business-input" placeholder="e.g., Sustainable Clothing Brand, Local Bakery, SaaS Tool" 
+                        class="w-full px-4 py-3 border border-indigo-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-lg">
+                    
+                    <button onclick="generateStrategyIdea()" id="generate-button"
+                            class="w-full flex items-center justify-center py-3 px-4 text-lg font-medium rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 disabled:bg-indigo-400">
+                        <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                        Generate Strategy Idea
+                    </button>
+
+                    <div id="strategy-output" class="mt-6 text-left p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex items-center justify-center">
+                        <p class="text-gray-500 italic">Your tailored digital marketing idea will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- New Section: Ad Copy Reviewer powered by Gemini -->
+        <section id="ad-copy-reviewer" class="py-20 bg-gray-100 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800">
+                    Ad Copy Reviewer ✨
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Instantly analyze and improve your paid ad messaging (Google, Facebook, etc.).
+                </p>
+
+                <div class="bg-white p-6 rounded-xl shadow-2xl space-y-4 text-left">
+                    <label for="ad-copy-input" class="block text-lg font-semibold text-gray-700">Paste Your Ad Copy Here (Max 300 characters)</label>
+                    <textarea id="ad-copy-input" rows="4" maxlength="300" placeholder="e.g., Best prices guaranteed. Buy now and save big on electronics. Limited time offer."
+                        class="w-full px-4 py-3 border border-indigo-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base"></textarea>
+                    
+                    <button onclick="reviewAdCopy()" id="review-button"
+                            class="w-full flex items-center justify-center py-3 px-4 text-lg font-medium rounded-lg shadow-md text-white bg-violet-600 hover:bg-violet-700 transition duration-300 disabled:bg-violet-400">
+                        <i data-lucide="brain" class="w-5 h-5 mr-2"></i>
+                        Analyze & Refine Copy
+                    </button>
+
+                    <div id="review-output" class="mt-6 text-left p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px]">
+                        <p class="text-gray-500 italic">The expert critique and suggestions will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: SEO Content Pillar Generator powered by Gemini -->
+        <section id="seo-pillar-generator" class="py-20 bg-violet-50 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800">
+                    SEO Content Pillar Generator ✨
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Instantly build a powerful content strategy by generating a main pillar topic and supporting cluster topics.
+                </p>
+
+                <div class="bg-white p-6 rounded-xl shadow-2xl space-y-4 text-left">
+                    <label for="topic-input" class="block text-lg font-semibold text-gray-700">Enter Your Broad Topic</label>
+                    <input type="text" id="topic-input" placeholder="e.g., Sustainable Home Gardening" 
+                        class="w-full px-4 py-3 border border-indigo-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-lg">
+                    
+                    <button onclick="generateContentPillars()" id="pillar-button"
+                            class="w-full flex items-center justify-center py-3 px-4 text-lg font-medium rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 disabled:bg-indigo-400">
+                        <i data-lucide="sitemap" class="w-5 h-5 mr-2"></i>
+                        Generate Pillar & Clusters
+                    </button>
+
+                    <div id="pillar-output" class="mt-6 text-left p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px]">
+                        <p class="text-gray-500 italic">Your pillar content architecture will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CTA Section (Call to Action - Prominent) -->
+        <section id="cta" class="py-20 bg-indigo-700 px-4 sm:px-6 lg:px-8 rounded-t-3xl shadow-inner">
+            <div class="max-w-4xl mx-auto text-center text-white">
+                <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Ready to Accelerate Your Digital Growth?</h2>
+                <p class="text-xl opacity-90 mb-8">
+                    Don't just keep up with the competition—surpass them. Schedule a free, no-obligation consultation today.
+                </p>
+                <a href="#contact" class="inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-full shadow-xl text-indigo-700 bg-white hover:bg-gray-100 transform transition duration-300 hover:scale-105">
+                    <i data-lucide="mail" class="w-6 h-6 mr-2"></i>
+                    Get Started Now
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. Contact Section -->
+        <section id="contact" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">Let's <span class="text-indigo-600">Talk Strategy</span></h2>
+                <p class="text-center text-lg text-gray-600 mb-12">Fill out the form below or connect with me directly.</p>
+
+                <div class="bg-gray-50 p-8 rounded-xl shadow-2xl border border-gray-200">
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="name" name="name" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Work Email</label>
+                            <input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="service" class="block text-sm font-medium text-gray-700">Service of Interest</label>
+                            <select id="service" name="service" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+                                <option>Performance Marketing (PPC)</option>
+                                <option>Search Engine Optimization (SEO)</option>
+                                <option>Content Strategy</option>
+                                <option>Full Digital Audit</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Your Project Details</label>
+                            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                            Send Message
+                        </button>
+                        <p id="form-message" class="text-center mt-4 hidden text-sm font-medium text-green-600"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-extrabold text-gradient mb-2">Digital Kadir Siddiqui</h3>
+            <p class="text-gray-400 mb-6">&copy; 2025. All rights reserved. | Growth is Guaranteed.</p>
+
+            <div class="flex justify-center space-x-6 mb-8">
+                <!-- Social Icons -->
+                <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-300" aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-300" aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-300" aria-label="Facebook">
+                    <i data-lucide="facebook" class="w-6 h-6"></i>
+                </a>
+            </div>
+
+            <div class="text-sm text-gray-500">
+                <p>Email: <a href="mailto:contact@kadir.digital" class="hover:text-indigo-400">contact@kadir.digital</a> | Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Icon Replacement, Form Handling, and Gemini API Integration -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Simple form submission handler (since we can't send real emails here)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contact-form');
+            const messageElement = document.getElementById('form-message');
+            
+            // Disable button and show loading state
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+
+            // Simulate network delay
+            setTimeout(() => {
+                // Reset button
+                submitButton.textContent = 'Send Message';
+                submitButton.disabled = false;
+
+                // Show success message
+                messageElement.textContent = 'Thank you for your message! Kadir will be in touch shortly.';
+                messageElement.classList.remove('hidden', 'text-red-600');
+                messageElement.classList.add('text-green-600');
+                
+                // Clear form fields
+                form.reset();
+            }, 1500);
+        }
+
+        // --- GSAP Animation for Hero Section ---
+        function setupHeroAnimation() {
+            const hero = document.getElementById('intro');
+            const blobs = gsap.utils.toArray('.blob');
+
+            // Define the initial state (which is mostly handled by CSS)
+            // We use a timeline that we can play and reverse on hover
+            const hoverAnimation = gsap.timeline({ paused: true, defaults: { duration: 0.8, ease: "power2.out" } });
+
+            // Animate the blobs on hover: scale up, rotate, and fade in intensity
+            hoverAnimation.to(blobs, {
+                scale: 1.2,
+                opacity: 1, // Increase opacity for intensity
+                rotation: 360,
+                filter: 'blur(120px)', // Increase blur slightly
+                stagger: 0.1,
+                overwrite: true // Ensure it takes control from the CSS animation
+            });
+
+            hero.addEventListener('mouseenter', () => hoverAnimation.timeScale(1).play());
+            hero.addEventListener('mouseleave', () => hoverAnimation.timeScale(2).reverse()); // Reverse faster
+        }
+
+        // Call the animation setup function when the page loads
+        window.onload = setupHeroAnimation;
+
+
+        // --- Gemini API Integration Core Setup ---
+        const apiKey = ""; // API key is handled automatically by the environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        // Function to handle exponential backoff for API calls
+        async function fetchWithBackoff(url, options, retries = 5) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        // If status is 429 (Too Many Requests) or 5xx, retry
+                        if (response.status === 429 || response.status >= 500) {
+                            throw new Error(`Server error: ${response.status}`);
+                        }
+                        // For other client errors, break and show error message
+                        const errorBody = await response.json();
+                        console.error("API Error Response:", errorBody);
+                        throw new Error(`API returned status ${response.status}: ${errorBody.error?.message || 'Unknown Error'}`);
+                    }
+                    return response;
+                } catch (error) {
+                    console.warn(`Attempt ${i + 1} failed: ${error.message}. Retrying...`);
+                    if (i < retries - 1) {
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    } else {
+                        throw new Error("Failed to connect to the Gemini API after multiple retries.");
+                }
+                }
+            }
+        }
+
+        // --- 1. Strategy Lab Function (Uses Google Search Grounding) ---
+        async function generateStrategyIdea() {
+            const businessInput = document.getElementById('business-input');
+            const outputDiv = document.getElementById('strategy-output');
+            const button = document.getElementById('generate-button');
+            const businessType = businessInput.value.trim();
+
+            if (!businessType) {
+                outputDiv.innerHTML = '<p class="text-red-600">Please enter a business type to generate a strategy.</p>';
+                return;
+            }
+
+            // Set loading state
+            button.disabled = true;
+            button.innerHTML = '<i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin"></i> Generating Strategy...';
+            outputDiv.innerHTML = `<p class="text-center text-gray-500 italic">Thinking up a cutting-edge strategy for "${businessType}"...</p>`;
+            lucide.createIcons();
+
+            const systemPrompt = `You are a world-class digital marketing strategist. Your task is to analyze the user's business type and provide a concise, actionable digital strategy idea (maximum 3 bullet points) focusing on either SEO, PPC, or Content. Provide a brief (2 sentence) opening summary and then the bullet points. Do not include any introductory or concluding phrases outside the strategy itself (e.g., 'Here is your strategy:').`;
+            
+            const userQuery = `Generate a high-level digital marketing strategy idea for a business that operates as a "${businessType}".`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }], // Enable grounding for current best practices
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                let generatedText = "Error: Could not retrieve a strategy. Please try again.";
+                let sources = [];
+                
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    generatedText = candidate.content.parts[0].text;
+                    
+                    // Extract grounding sources
+                    const groundingMetadata = candidate.groundingMetadata;
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+                }
+                
+                // Format the output: convert markdown list items to HTML list items
+                let htmlContent = generatedText.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0)
+                    .map(line => {
+                        if (line.startsWith('*')) {
+                            return `<li class="mb-2 ml-6 list-disc">${line.substring(1).trim()}</li>`;
+                        } else if (line.startsWith('-')) {
+                            return `<li class="mb-2 ml-6 list-disc">${line.substring(1).trim()}</li>`;
+                        }
+                        return `<p class="mb-3">${line}</p>`;
+                    }).join('');
+
+                if (htmlContent.includes('<li')) {
+                    htmlContent = `<ul class="list-inside">${htmlContent}</ul>`;
+                }
+
+                let finalOutput = `<div class="text-base text-gray-700">${htmlContent}</div>`;
+                
+                if (sources.length > 0) {
+                    finalOutput += '<div class="mt-4 pt-4 border-t border-gray-200">';
+                    finalOutput += '<p class="text-xs font-semibold text-gray-600 mb-2">Grounded in the following web insights:</p>';
+                    sources.forEach(source => {
+                        finalOutput += `<a href="${source.uri}" target="_blank" class="block text-xs text-indigo-500 hover:text-indigo-700 truncate">${source.title}</a>`;
+                    });
+                    finalOutput += '</div>';
+                }
+
+                outputDiv.innerHTML = finalOutput;
+
+            } catch (error) {
+                console.error("Gemini API error:", error);
+                outputDiv.innerHTML = `<p class="text-red-600">Failed to generate strategy: ${error.message}</p>`;
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 mr-2"></i> Generate Strategy Idea';
+                lucide.createIcons();
+            }
+        }
+
+        // --- 2. Ad Copy Reviewer Function ---
+        async function reviewAdCopy() {
+            const copyInput = document.getElementById('ad-copy-input');
+            const outputDiv = document.getElementById('review-output');
+            const button = document.getElementById('review-button');
+            const adCopy = copyInput.value.trim();
+
+            if (!adCopy) {
+                outputDiv.innerHTML = '<p class="text-red-600">Please paste some ad copy to review.</p>';
+                return;
+            }
+
+            // Set loading state
+            button.disabled = true;
+            button.innerHTML = '<i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin"></i> Analyzing Copy...';
+            outputDiv.innerHTML = `<p class="text-center text-gray-500 italic">Critiquing the copy for conversion rate optimization...</p>`;
+            lucide.createIcons();
+
+            const systemPrompt = `You are a highly experienced PPC (Pay-Per-Click) copywriter and digital marketing analyst. Your task is to critique the user's provided ad copy (headline/description) based on best practices (clarity, urgency, benefit focus, CTA). 
+1. Provide a brief analysis (1-2 sentences) on the copy's main strength and weakness.
+2. Provide two revised, high-impact versions, clearly labeling them: 'Revised Option 1:' and 'Revised Option 2:'. Each revised option should be one line.`;
+            
+            const userQuery = `Critique and revise this ad copy: "${adCopy}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                let generatedText = "Error: Could not retrieve critique. Please try again.";
+                
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    generatedText = candidate.content.parts[0].text;
+                }
+                
+                // Simple formatting: convert lines to paragraphs, and bold revisions
+                let htmlContent = generatedText.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0)
+                    .map(line => {
+                        if (line.startsWith('Revised Option 1:') || line.startsWith('Revised Option 2:')) {
+                            // Bold the revised options for visibility
+                            return `<p class="mb-3 text-indigo-700 font-bold">${line}</p>`;
+                        }
+                        // Treat other lines as regular paragraphs
+                        return `<p class="mb-3 text-gray-700">${line}</p>`;
+                    }).join('');
+
+                outputDiv.innerHTML = `<div class="text-base">${htmlContent}</div>`;
+
+            } catch (error) {
+                console.error("Gemini API error:", error);
+                outputDiv.innerHTML = `<p class="text-red-600">Failed to analyze copy: ${error.message}</p>`;
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i data-lucide="brain" class="w-5 h-5 mr-2"></i> Analyze & Refine Copy';
+                lucide.createIcons();
+            }
+        }
+        
+        // --- 3. SEO Content Pillar Generator Function ---
+        async function generateContentPillars() {
+            const topicInput = document.getElementById('topic-input');
+            const outputDiv = document.getElementById('pillar-output');
+            const button = document.getElementById('pillar-button');
+            const mainTopic = topicInput.value.trim();
+
+            if (!mainTopic) {
+                outputDiv.innerHTML = '<p class="text-red-600">Please enter a main topic to generate content pillars.</p>';
+                return;
+            }
+
+            // Set loading state
+            button.disabled = true;
+            button.innerHTML = '<i data-lucide="loader-circle" class="w-5 h-5 mr-2 animate-spin"></i> Structuring Content...';
+            outputDiv.innerHTML = `<p class="text-center text-gray-500 italic">Mapping out a high-authority content cluster for "${mainTopic}"...</p>`;
+            lucide.createIcons();
+
+            const systemPrompt = `You are an expert SEO Content Architect. Given the user's broad topic, you must generate a structured content plan.
+1. Create a compelling, detailed title for the main 'Pillar Page' (a comprehensive guide).
+2. Generate exactly three specific, related 'Cluster Content' topics (sub-articles) that link back to the pillar. These must include highly focused, long-tail keywords.
+Format your output strictly as follows:
+**Pillar Page:** [The Title]
+**Cluster Topics:**
+* [Cluster 1 Topic/Keyword]
+* [Cluster 2 Topic/Keyword]
+* [Cluster 3 Topic/Keyword]
+Do not include any other commentary, introduction, or conclusion.`;
+            
+            const userQuery = `Generate a Pillar Page title and three Cluster Topics for the broad subject: "${mainTopic}".`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                let generatedText = "Error: Could not retrieve the content structure. Please try again.";
+                
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    generatedText = candidate.content.parts[0].text;
+                }
+                
+                // Format the output: convert to HTML structure
+                let htmlContent = generatedText.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0);
+
+                let outputHtml = '';
+                let inClusterSection = false;
+
+                outputHtml += `<div class="text-base text-gray-700">`;
+                
+                htmlContent.forEach(line => {
+                    if (line.startsWith('**Pillar Page:')) {
+                        const title = line.replace('**Pillar Page:**', '').trim();
+                        outputHtml += `<p class="mb-4"><span class="block text-sm font-semibold text-indigo-600">Pillar Page Title:</span> <span class="text-lg font-bold text-gray-900">${title}</span></p>`;
+                        inClusterSection = false;
+                    } else if (line.startsWith('**Cluster Topics:')) {
+                        outputHtml += `<p class="block text-sm font-semibold text-indigo-600 mb-2">Supporting Cluster Topics:</p><ul class="list-disc ml-5 space-y-2">`;
+                        inClusterSection = true;
+                    } else if (inClusterSection && (line.startsWith('*') || line.startsWith('-'))) {
+                        const topic = line.substring(1).trim();
+                        outputHtml += `<li>${topic}</li>`;
+                    }
+                });
+                
+                if (inClusterSection) {
+                    outputHtml += `</ul>`;
+                }
+                outputHtml += `</div>`;
+
+
+                outputDiv.innerHTML = outputHtml;
+
+            } catch (error) {
+                console.error("Gemini API error:", error);
+                outputDiv.innerHTML = `<p class="text-red-600">Failed to generate pillar content: ${error.message}</p>`;
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i data-lucide="sitemap" class="w-5 h-5 mr-2"></i> Generate Pillar & Clusters';
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>
