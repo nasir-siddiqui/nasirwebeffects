@@ -1,0 +1,270 @@
+<!-- 
+  Liquid Light Morphing Effect
+  - Activates on Body Hover
+  - Uses Canvas composite operations for "molten" blending
+  - Ultra-modern Neon/Teal aesthetic
+-->
+
+<div id="liquid-container">
+  <!-- The Canvas for the animated blobs -->
+  <canvas id="liquid-canvas"></canvas>
+  
+  <!-- Static background gradient (visible when not hovering) -->
+  <div class="static-bg"></div>
+
+  <!-- Foreground Content -->
+  <div class="content-layer">
+    <h1>Luminous Flow</h1>
+    <p>Hover to activate the liquid light.</p>
+  </div>
+</div>
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #050505;
+  }
+
+  #liquid-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* 1. The Static Background (Visible when idle) */
+  .static-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Minimal, elegant dark gradient */
+    background: linear-gradient(135deg, #021117 0%, #051e22 100%);
+    z-index: 0;
+  }
+
+  /* 2. The Animated Canvas (Fades in on hover) */
+  #liquid-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth dissolve */
+    /* Optional: Add a blur filter for extra gooeyness (performance cost) */
+    /* filter: blur(30px); */ 
+  }
+
+  /* Active state class for the canvas */
+  #liquid-canvas.active {
+    opacity: 1;
+  }
+
+  /* 3. Content Layer */
+  .content-layer {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    pointer-events: none; /* Let mouse pass through to body */
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0.6;
+  }
+</style>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('liquid-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let orbs = [];
+    let isHovering = false;
+
+    // Configuration
+    const config = {
+      orbCount: 15,
+      baseRadius: 150, // Large radii for soft blending
+      speed: 0.005,    // Speed of sine wave oscillation
+      colors: [
+        'rgba(0, 255, 200, 1)',   // Electric Green
+        'rgba(0, 200, 255, 1)',   // Cyan/Teal
+        'rgba(50, 255, 150, 1)',  // Lime-ish Green
+        'rgba(200, 255, 255, 1)'  // Soft White
+      ]
+    };
+
+    const mouse = { x: 0, y: 0 };
+
+    // Resize handling
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initOrbs();
+    }
+    window.addEventListener('resize', resize);
+
+    // Orb Class
+    class Orb {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        // Random position
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        
+        // Random size
+        this.radius = config.baseRadius + Math.random() * 100;
+        
+        // Random color
+        this.color = config.colors[Math.floor(Math.random() * config.colors.length)];
+        
+        // Movement properties (Sine wave offsets)
+        this.angleX = Math.random() * Math.PI * 2;
+        this.angleY = Math.random() * Math.PI * 2;
+        this.speedX = (Math.random() * 0.5 + 0.2) * 0.02;
+        this.speedY = (Math.random() * 0.5 + 0.2) * 0.02;
+      }
+
+      update() {
+        // Oscillation
+        this.angleX += this.speedX;
+        this.angleY += this.speedY;
+
+        // Base movement (Lissajous-ish figure)
+        let moveX = Math.cos(this.angleX) * 2; 
+        let moveY = Math.sin(this.angleY) * 2;
+
+        // Mouse attraction (subtle)
+        if (isHovering) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          
+          // Gently nudge towards mouse
+          this.x += dx * 0.005; 
+          this.y += dy * 0.005;
+        }
+
+        this.x += moveX;
+        this.y += moveY;
+
+        // Wrap around screen for continuous flow
+        if (this.x < -this.radius) this.x = width + this.radius;
+        if (this.x > width + this.radius) this.x = -this.radius;
+        if (this.y < -this.radius) this.y = height + this.radius;
+        if (this.y > height + this.radius) this.y = -this.radius;
+      }
+
+      draw() {
+        // Create a soft radial gradient
+        // We draw slightly larger than radius to ensure fade out
+        const gradient = ctx.createRadialGradient(
+          this.x, this.y, 0, 
+          this.x, this.y, this.radius
+        );
+
+        // "Molten" look: Bright center -> Color -> Transparent
+        // We parse the rgba string to manipulate opacity if needed, 
+        // but here we assume the config colors are the "mid" tone.
+        
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.3)'); // Hot center
+        gradient.addColorStop(0.4, this.color);               // Main Color
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');         // Transparent edge
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initOrbs() {
+      orbs = [];
+      for (let i = 0; i < config.orbCount; i++) {
+        orbs.push(new Orb());
+      }
+    }
+
+    function animate() {
+      // Clear screen
+      // Note: We don't need to fully clearRect if we want trails, 
+      // but for "liquid" shifting, clean redraw is better.
+      ctx.clearRect(0, 0, width, height);
+
+      // Global Composite Operation is KEY for the effect
+      // 'hard-light' or 'overlay' makes overlapping colors vivid
+      // 'screen' makes them bright/glowing
+      ctx.globalCompositeOperation = 'hard-light'; 
+
+      orbs.forEach(orb => {
+        orb.update();
+        orb.draw();
+      });
+
+      // Reset composite for next frame (if we drew other things)
+      ctx.globalCompositeOperation = 'source-over';
+
+      requestAnimationFrame(animate);
+    }
+
+    // Interaction
+    document.body.addEventListener('mouseenter', () => {
+      isHovering = true;
+      canvas.classList.add('active');
+    });
+
+    document.body.addEventListener('mouseleave', () => {
+      isHovering = false;
+      canvas.classList.remove('active');
+    });
+
+    document.body.addEventListener('mousemove', (e) => {
+      // Only track mouse if we are "active" to save calc
+      // But for simplicity, we just track coordinates
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      
+      // Fallback for initial hover
+      if (!isHovering) {
+        isHovering = true;
+        canvas.classList.add('active');
+      }
+    });
+    
+    // Mobile support
+    document.body.addEventListener('touchstart', () => {
+      isHovering = true;
+      canvas.classList.add('active');
+    }, {passive: true});
+
+    // Init
+    resize();
+    animate();
+
+  })();
+</script>
